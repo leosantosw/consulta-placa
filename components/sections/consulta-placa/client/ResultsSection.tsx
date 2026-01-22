@@ -5,6 +5,7 @@ import Card from "@ui/Card";
 import InfoRow from "@ui/InfoRow";
 import MiniCard from "@ui/MiniCard";
 import { emptyValue, joinParts, statusStyles } from "../utils";
+import Image from "next/image";
 
 type ResultsSectionProps = {
   data: ConsultaPlacaResponse;
@@ -32,9 +33,15 @@ export default function ResultsSection({ data }: ResultsSectionProps) {
     <div className="space-y-6">
       <Card className="p-0">
         <div className="flex flex-col gap-6 p-6 md:flex-row md:items-center">
-          <div className="flex h-20 w-20 items-center justify-center rounded-2xl border border-border bg-background">
+          <div className="flex h-24 w-24 items-center justify-center rounded-2xl border border-border bg-white">
             {data.logo ? (
-              <img src={data.logo} alt={data.marca} className="h-12" />
+              <Image
+                src={data.logo}
+                alt={data.marca}
+                width={64}
+                height={64}
+                className="h-16 w-16"
+              />
             ) : (
               <span className="text-sm font-semibold text-text-secondary">
                 {data.marca}

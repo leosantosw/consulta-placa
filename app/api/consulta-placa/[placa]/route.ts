@@ -10,7 +10,7 @@ const mockedData = {
   chassi: "*****10137",
   codigoSituacao: "0",
   cor: "Prata",
-  data: "20/07/2022 15:10:09",
+  data: new Date().toDateString(),
   extra: {
     ano_fabricacao: "2007",
     ano_modelo: "2007",
@@ -89,5 +89,6 @@ export async function GET(
 ) {
   const { placa } = await params;
   console.log("Placa:", placa);
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   return NextResponse.json(mockedData);
 }
