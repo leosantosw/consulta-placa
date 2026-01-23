@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { withAuth } from "@/lib/auth/withAuth";
+import { debitCredits } from "@/lib/wallets/debitCredits";
 
 const mockedData = {
   MARCA: "VW",
@@ -83,12 +85,31 @@ const mockedData = {
   uf: "RS"
 };
 
-export async function GET(
-  _request: Request,
-  { params }: { params: Promise<{ placa: string }> }
-) {
-  const { placa } = await params;
-  console.log("Placa:", placa);
+const getPlacaFromRequest = (request: Request) => {
+  const url = new URL(request.url);
+  const parts = url.pathname.split("/").filter(Boolean);
+  return parts[parts.length - 1] ?? "";
+};
+
+export const GET = withAuth(async (request, payload) => {
+  const placa = getPlacaFromRequest(request);
+
+  const debitResult = await debitCredits(payload.sub, 1, 'consulta_placa');
+
+  if (!debitResult.ok) {
+    if (debitResult.reason === "wallet_not_found") {
+      return NextResponse.json(
+        { error: "Carteira não encontrada." },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { error: "Créditos insuficientes." },
+      { status: 402 }
+    );
+  }
+
   await new Promise((resolve) => setTimeout(resolve, 1000));
   return NextResponse.json(mockedData);
-}
+});
