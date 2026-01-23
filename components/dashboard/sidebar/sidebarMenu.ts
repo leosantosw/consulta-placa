@@ -21,21 +21,21 @@ export const sidebarMenu: SidebarMenuSection[] = [
         href: "/dashboard/consulta-placa",
         icon: Car,
       },
-      {
-        label: "Multas e Infrações",
-        href: "/dashboard/consulta-multas",
-        icon: ReceiptText,
-      },
+      // {
+      //   label: "Multas e Infrações",
+      //   href: "/dashboard/consulta-multas",
+      //   icon: ReceiptText,
+      // },
     ],
   },
-  {
-    title: "Pessoas",
-    items: [
-      {
-        label: "Consultar Receita Federal",
-        href: "/dashboard/consultar-receita-federal",
-        icon: FileSearch,
-      },
-    ],
-  },
+  // {
+  //   title: "Pessoas",
+  //   items: [
+  //     {
+  //       label: "Consultar Receita Federal",
+  //       href: "/dashboard/consultar-receita-federal",
+  //       icon: FileSearch,
+  //     },
+  //   ],
+  // },
 ];
