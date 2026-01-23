@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
 import { parseRegisterInput } from "@/lib/auth/validation";
+import { createJwt } from "@/lib/auth/jwt";
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -38,7 +40,12 @@ export async function POST(request: Request) {
       data: {
         name: input.name,
         email: input.email,
-        password_hash: input.password // to encrypt
+        password_hash: input.password,
+        wallets: {
+          create: {
+            balance: 0
+          }
+        }
       },
       select: {
         id: true,
@@ -46,6 +53,21 @@ export async function POST(request: Request) {
         email: true,
         created_at: true
       }
+    });
+
+    const token = await createJwt(
+      { sub: user.id, email: user.email, name: user.name },
+      process.env.JWT_SECRET!,
+      60 * 60 * 24 * 7
+    );
+
+    const cookieStore = await cookies();
+    cookieStore.set("auth_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7
     });
 
     return NextResponse.json(user, { status: 201 });
