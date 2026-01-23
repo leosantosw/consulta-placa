@@ -1,6 +1,7 @@
-import { SignJWT } from "jose";
+import 'server-only'
+import { SignJWT, jwtVerify } from "jose";
 
-type JwtPayload = {
+export type JwtPayload = {
   sub: string;
   email: string;
   name: string;
@@ -18,4 +19,10 @@ export const createJwt = async (
     .setIssuedAt()
     .setExpirationTime(`${expiresInSeconds}s`)
     .sign(secretKey);
+};
+
+export const verifyJwt = async (token: string, secret: string) => {
+  const secretKey = new TextEncoder().encode(secret);
+  const { payload } = await jwtVerify(token, secretKey);
+  return payload as JwtPayload;
 };
