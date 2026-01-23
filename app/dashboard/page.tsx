@@ -1,4 +1,4 @@
-import PageHeader from "../../components/dashboard/PageHeader";
+import PageHeader from "@/components/dashboard/PageHeader";
 
 export const metadata = {
   title: "Dashboard",
