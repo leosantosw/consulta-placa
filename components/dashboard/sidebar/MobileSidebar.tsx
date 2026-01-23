@@ -1,32 +1,19 @@
 "use client";
 
-import { useEffect } from "react";
+import { ReactNode } from "react";
 import SidebarNav from "./SidebarNav";
 
 type MobileSidebarProps = {
   isOpen: boolean;
   onClose: () => void;
+  creditsSlot?: ReactNode;
 };
 
-export default function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
-  useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen, onClose]);
-
+export default function MobileSidebar({
+  isOpen,
+  onClose,
+  creditsSlot,
+}: MobileSidebarProps) {
   return (
     <div
       className={`fixed inset-0 z-50 md:hidden ${
@@ -54,6 +41,7 @@ export default function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
             Menu
           </p>
         </div>
+        {creditsSlot ? <div className="mb-6">{creditsSlot}</div> : null}
         <SidebarNav onNavigate={onClose} />
       </aside>
     </div>
