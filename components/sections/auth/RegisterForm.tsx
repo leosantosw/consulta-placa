@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LockKeyhole, Mail, User } from "lucide-react";
 import { toast } from "sonner";
@@ -25,6 +26,7 @@ const initialState: FormState = {
 
 export default function RegisterForm() {
   const [formState, setFormState] = useState<FormState>(initialState);
+  const router = useRouter();
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
@@ -85,9 +87,9 @@ export default function RegisterForm() {
       }
 
       setStatus("success");
-      toast.success("Cadastro criado. Agora você pode entrar.");
       setFormState(initialState);
       setErrors({});
+      router.push("/dashboard");
     } catch {
       setStatus("error");
       toast.error("Não foi possível criar o cadastro. Tente novamente.");
