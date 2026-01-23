@@ -69,18 +69,12 @@ export default function ConsultaPlacaForm() {
   const [plateError, setPlateError] = useState<string | null>(null);
   const lastSuccessfulPlate = state.status === "success" ? state.plate : "";
 
-  const isValidPlate = (value: string) =>
-    /^[A-Z]{3}\\d{4}$/.test(value) || /^[A-Z]{3}\\d[A-Z]\\d{2}$/.test(value);
-
   const validatePlate = (value: string) => {
     if (!value) {
       return "Informe a placa.";
     }
-    if (value.length < 7) {
+    if (value.length !== 7) {
       return "Informe a placa completa.";
-    }
-    if (!isValidPlate(value)) {
-      return "Formato de placa inválido.";
     }
     return null;
   };
