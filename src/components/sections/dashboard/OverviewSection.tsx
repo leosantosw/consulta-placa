@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, CreditCard, Search } from "lucide-react";
 import Card from "@/components/ui/Card";
 import CounterCard from "@/components/ui/CounterCard";
+import HowItWorksSection from "@/components/sections/dashboard/HowItWorksSection";
 import { getOverviewData } from "@/lib/dashboard/getOverviewData";
 
 const formatDate = (value: Date) =>
@@ -81,6 +82,8 @@ export default async function OverviewSection() {
             </p>
           )}
         </Card>
+
+        <HowItWorksSection />
       </div>
     </section>
   );
