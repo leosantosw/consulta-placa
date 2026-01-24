@@ -3,6 +3,7 @@ import { ArrowRight, CreditCard, Search } from "lucide-react";
 import Card from "@/components/ui/Card";
 import CounterCard from "@/components/ui/CounterCard";
 import HowItWorksSection from "@/components/sections/dashboard/HowItWorksSection";
+import WelcomeModal from "@/components/sections/dashboard/WelcomeModal";
 import { getOverviewData } from "@/lib/dashboard/getOverviewData";
 
 const formatDate = (value: Date) =>
@@ -12,10 +13,12 @@ const formatDate = (value: Date) =>
   }).format(value);
 
 export default async function OverviewSection() {
-  const { items, totalQueries, creditsUsed } = await getOverviewData();
+  const { items, totalQueries, creditsUsed, todayCounts, balance } =
+    await getOverviewData();
 
   return (
     <section className="rounded-2xl border border-border bg-card p-8 shadow-sm">
+      <WelcomeModal />
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -33,16 +36,21 @@ export default async function OverviewSection() {
           </Link>
         </div>
 
+        {balance === 0 ? (
+          <div className="rounded-2xl border border-amber-200/70 bg-amber-500/10 px-4 py-3 text-sm text-amber-800">
+            Você precisa de créditos para realizar novas consultas.
+          </div>
+        ) : null}
         <div className="grid gap-4 sm:grid-cols-2">
           <CounterCard
-            title="Consultas realizadas"
+            title="Consultas feitas"
             value={totalQueries.toLocaleString("pt-BR")}
             icon={Search}
             iconTone="bg-blue-500/10 text-blue-600"
             cardTone="border-blue-200/70 bg-sky-500/5"
           />
           <CounterCard
-            title="Créditos usados"
+            title="Créditos consumidos"
             value={creditsUsed.toLocaleString("pt-BR")}
             icon={CreditCard}
             iconTone="bg-rose-500/10 text-rose-600"
@@ -59,7 +67,7 @@ export default async function OverviewSection() {
             <div className="mt-4 divide-y divide-border/60">
               {items.map((item) => (
                 <div
-                  key={item.id.toString()}
+                  key={item.entity_key ?? item.created_at.toISOString()}
                   className="flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div>
@@ -70,9 +78,16 @@ export default async function OverviewSection() {
                       {formatDate(item.created_at)}
                     </p>
                   </div>
-                  <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-700">
-                    Concluída
-                  </span>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-700">
+                      Concluída
+                    </span>
+                    {item.entity_key && todayCounts[item.entity_key] > 1 ? (
+                      <span className="inline-flex items-center rounded-full border border-border/70 bg-background/70 px-3 py-1 text-xs font-medium text-text-secondary">
+                        Consultada {todayCounts[item.entity_key]}x hoje
+                      </span>
+                    ) : null}
+                  </div>
                 </div>
               ))}
             </div>

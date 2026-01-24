@@ -89,7 +89,7 @@ export default function RegisterForm() {
       setStatus("success");
       setFormState(initialState);
       setErrors({});
-      router.push("/dashboard");
+      router.push("/dashboard?onboarding=welcome");
     } catch {
       setStatus("error");
       toast.error("Não foi possível criar o cadastro. Tente novamente.");
