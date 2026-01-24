@@ -1,9 +1,9 @@
 "use client";
 
 import type { ConsultaPlacaResponse } from "../types";
-import Card from "@ui/Card";
-import InfoRow from "@ui/InfoRow";
-import MiniCard from "@ui/MiniCard";
+import Card from "@/components/ui/Card";
+import InfoRow from "@/components/ui/InfoRow";
+import MiniCard from "@/components/ui/MiniCard";
 import { emptyValue, joinParts, statusStyles } from "../utils";
 import Image from "next/image";
 

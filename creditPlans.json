@@ -1,0 +1,22 @@
+[
+  {
+    "id": "basic",
+    "name": "Básico",
+    "credits": 10,
+    "priceCents": 990
+  },
+  {
+    "id": "essential",
+    "name": "Essencial",
+    "credits": 50,
+    "priceCents": 3990,
+    "recommended": true,
+    "badge": "Mais popular"
+  },
+  {
+    "id": "pro",
+    "name": "Profissional",
+    "credits": 200,
+    "priceCents": 12990
+  }
+]

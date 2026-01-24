@@ -12,8 +12,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { defaultConsultaPlacaState, type ConsultaPlacaState } from "../types";
 import { consultaPlacaAction } from "../actions";
 import { normalizePlate } from "../utils";
-import Button from "@ui/Button";
-import Card from "@ui/Card";
+import Button from "@/components/ui/Button";
+import Card from "@/components/ui/Card";
 import ResultsSection from "./ResultsSection";
 
 function FormStatus({ state }: { state: ConsultaPlacaState }) {
