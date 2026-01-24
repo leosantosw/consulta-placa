@@ -30,7 +30,10 @@ export default function SidebarNav({ onNavigate }: SidebarNavProps) {
         <SidebarSection key={section.title} title={section.title}>
           {section.items.map((item) => {
             const isActive =
-              pathname === item.href || pathname.startsWith(`${item.href}/`);
+              item.href === "/dashboard"
+                ? pathname === "/dashboard"
+                : pathname === item.href ||
+                  pathname.startsWith(`${item.href}/`);
 
             return (
               <SidebarLink

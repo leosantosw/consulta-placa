@@ -5,11 +5,18 @@ type DebitCreditsResult =
   | { ok: true; balance: number }
   | { ok: false; reason: "wallet_not_found" | "insufficient_credits" };
 
+type DebitCreditsOptions = {
+  referenceId?: string;
+  entityType?: string;
+  entityKey?: string;
+};
+
 export const debitCredits = async (
   userId: string,
   amount: number,
-  transactionType: string,
+  options?: DebitCreditsOptions,
 ): Promise<DebitCreditsResult> => {
+  const { referenceId, entityType, entityKey } = options ?? {};
   const result = await prisma.$transaction(async (tx) => {
     const wallet = await tx.wallets.findUnique({
       where: { user_id: userId },
@@ -33,7 +40,9 @@ export const debitCredits = async (
       data: {
         user_id: userId,
         amount: -amount,
-        type: transactionType
+        reference_id: referenceId ?? null,
+        entity_type: entityType ?? null,
+        entity_key: entityKey ?? null
       }
     });
 

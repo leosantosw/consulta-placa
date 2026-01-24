@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { withAuth } from "@/lib/auth/withAuth";
 import { debitCredits } from "@/lib/wallets/debitCredits";
+import { randomUUID } from "node:crypto";
 
 const mockedData = {
   MARCA: "VW",
@@ -94,7 +95,11 @@ const getPlacaFromRequest = (request: Request) => {
 export const GET = withAuth(async (request, payload) => {
   const placa = getPlacaFromRequest(request);
 
-  const debitResult = await debitCredits(payload.sub, 1, 'consulta_placa');
+  const debitResult = await debitCredits(payload.sub, 1, {
+    referenceId: randomUUID(),
+    entityType: "plate_query",
+    entityKey: placa
+  });
 
   if (!debitResult.ok) {
     if (debitResult.reason === "wallet_not_found") {

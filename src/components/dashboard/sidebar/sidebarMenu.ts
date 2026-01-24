@@ -1,4 +1,4 @@
-import { Car, FileSearch, ReceiptText } from "lucide-react";
+import { Car, LayoutDashboard } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 
 export type SidebarLinkItem = {
@@ -13,6 +13,16 @@ export type SidebarMenuSection = {
 };
 
 export const sidebarMenu: SidebarMenuSection[] = [
+  {
+    title: "Geral",
+    items: [
+      {
+        label: "Visão geral",
+        href: "/dashboard",
+        icon: LayoutDashboard,
+      },
+    ],
+  },
   {
     title: "Veículos",
     items: [
