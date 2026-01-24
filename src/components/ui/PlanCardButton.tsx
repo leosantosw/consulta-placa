@@ -1,6 +1,6 @@
 "use client";
 
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes } from "react";
 import { ArrowRight } from "lucide-react";
 
 type PlanCardButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -19,9 +19,9 @@ export default function PlanCardButton({
   const baseStyles =
     "flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg px-6 py-3.5 text-base font-semibold transition-all duration-200";
 
-  const featuredStyles = "bg-[var(--text)] dark:bg-[var(--card)] text-white hover:opacity-90";
+  const featuredStyles = "bg-[var(--featured)] text-white hover:opacity-90 border-2 border-[var(--featured)] dark:bg-[var(--primary)] dark:border-[var(--primary)] dark:hover:bg-[var(--primary)]/90";
   const defaultStyles =
-    "border-2 border-[var(--text)] bg-transparent text-[var(--text)] hover:bg-[var(--text)] hover:text-white";
+    "border-2 border-[var(--text)] bg-transparent text-[var(--text)] hover:border-[var(--featured)] hover:bg-[var(--featured)] hover:text-white dark:border-[var(--text-secondary)] dark:hover:border-[var(--text)] dark:hover:bg-[var(--featured)]";
 
   return (
     <button

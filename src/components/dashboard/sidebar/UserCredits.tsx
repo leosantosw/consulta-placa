@@ -1,6 +1,7 @@
 'use server'
 
 import { getWallet } from "@/lib/wallets/getWallet";
+import BuyCreditsLink from "@/components/ui/BuyCreditsLink";
 
 export default async function UserCredits() {
   const wallet = await getWallet();
@@ -30,6 +31,7 @@ export default async function UserCredits() {
           {hasCredits ? "Disponível" : "Sem créditos"}
         </div>
       </div>
+      <BuyCreditsLink className="mt-4" />
     </div>
   );
 }

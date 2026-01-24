@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import DashboardFooter from "./footer/DashboardFooter";
 import Sidebar from "./sidebar/Sidebar";
-import DashboardNavigation from "./DashboardShell";
+import DashboardNavigation from "./DashboardNavigation";
 import UserCredits from "./sidebar/UserCredits";
 
 type DashboardLayoutProps = {

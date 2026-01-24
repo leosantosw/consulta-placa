@@ -3,10 +3,10 @@ import CreditsReassurance from "@/components/sections/credits/CreditsReassurance
 import { creditPlans } from "@/lib/wallets/creditPlans";
 
 const reassuranceItems = [
-  "Créditos não expiram",
-  "Sem assinatura",
-  "Pagamento seguro",
-  "Dados públicos (LGPD)",
+  "Créditos sem expiração",
+  "Sem assinatura recorrente",
+  "Pagamento 100% seguro",
+  "Dados públicos conforme LGPD",
 ];
 
 export default function CreditsPage() {

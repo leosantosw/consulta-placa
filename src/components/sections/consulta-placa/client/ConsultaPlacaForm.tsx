@@ -14,6 +14,7 @@ import { consultaPlacaAction } from "../actions";
 import { normalizePlate } from "../utils";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
+import BuyCreditsLink from "@/components/ui/BuyCreditsLink";
 import ResultsSection from "./ResultsSection";
 
 function FormStatus({ state }: { state: ConsultaPlacaState }) {
@@ -21,12 +22,19 @@ function FormStatus({ state }: { state: ConsultaPlacaState }) {
   const resultData = state.status === "success" ? state.data : null;
   const isError = state.status === "error";
   const isEmpty = state.status === "empty";
+  const isInsufficientCredits =
+    isError && state.error === "Créditos insuficientes.";
 
   return (
-    <div className="mt-6 space-y-6">
+    <div className="mt-4 space-y-4">
       {!pending && isError ? (
         <Card>
-          <p className="text-sm font-semibold text-rose-600">{state.error}</p>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm font-semibold text-rose-600">{state.error}</p>
+            {isInsufficientCredits ? (
+              <BuyCreditsLink variant="button" className="w-full sm:w-auto" />
+            ) : null}
+          </div>
         </Card>
       ) : null}
       {!pending && isEmpty ? (
@@ -110,26 +118,33 @@ export default function ConsultaPlacaForm() {
       onSubmit={handleSubmit}
       className="mt-6 flex flex-col gap-4"
     >
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
-        <label className="flex-1">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-text-secondary">
-            Placa
-          </span>
-          <div className="mt-2 flex items-center gap-3 rounded-2xl border border-border bg-background/80 px-4 py-3 text-sm text-text shadow-sm">
-            <input
-              name="placa"
-              ref={inputRef}
-              defaultValue={defaultConsultaPlacaState.plate}
-              onChange={handleChange}
-              placeholder="AAA0A00 ou AAA0000"
-              className="w-full bg-transparent text-sm font-semibold uppercase text-text outline-none placeholder:text-text-secondary"
-            />
-          </div>
-          {plateError ? (
-            <p className="mt-2 text-xs text-rose-500">{plateError}</p>
-          ) : null}
+      <div className="grid gap-2 sm:grid-cols-[1fr_auto] sm:items-end">
+        <label
+          htmlFor="placa"
+          className="text-xs font-semibold uppercase tracking-[0.2em] text-text-secondary sm:col-span-2"
+        >
+          Placa
         </label>
-        <Button type="submit">Consultar</Button>
+        <div className="flex items-center gap-3 rounded-2xl border border-border bg-background/80 px-4 py-3 text-sm text-text shadow-sm">
+          <input
+            id="placa"
+            name="placa"
+            ref={inputRef}
+            defaultValue={defaultConsultaPlacaState.plate}
+            onChange={handleChange}
+            placeholder="AAA0A00 ou AAA0000"
+            aria-describedby={plateError ? "placa-error" : undefined}
+            aria-invalid={Boolean(plateError)}
+            className="w-full bg-transparent text-sm font-semibold uppercase text-text outline-none placeholder:text-text-secondary"
+          />
+        </div>
+        <Button type="submit" variant="ghost">Consultar</Button>
+        <p
+          id="placa-error"
+          className="min-h-[1rem] text-xs text-rose-500 sm:col-span-2"
+        >
+          {plateError ?? ""}
+        </p>
       </div>
       <FormStatus state={state} />
     </form>

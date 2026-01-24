@@ -43,7 +43,7 @@ export default function PlanCard({
       )}
 
       {isFeatured && badgeText && (
-        <span className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 rounded-full border border-[var(--primary)]/20 bg-[var(--primary)]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[var(--primary)] backdrop-blur-sm">
+        <span className="absolute -top-4 left-1/2 z-10 -translate-x-1/2 inline-flex items-center gap-2 rounded-full border border-[var(--primary)]/30 bg-[var(--primary)]/15 px-12 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--primary)] shadow-sm shadow-[var(--primary)]/20 backdrop-blur-sm whitespace-nowrap sm:px-4">
           <Sparkles className="h-3.5 w-3.5" />
           {badgeText}
         </span>
