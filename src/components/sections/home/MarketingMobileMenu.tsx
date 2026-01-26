@@ -1,23 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import type { LucideIcon } from "lucide-react";
 import { User } from "lucide-react";
-
-type NavLink = {
-  label: string;
-  href: string;
-  Icon: LucideIcon;
-};
+import { navLinks } from "@/components/sections/home/navLinks";
 
 type MarketingMobileMenuProps = {
-  navLinks: NavLink[];
   menuOpen: boolean;
   closeMenu: () => void;
 };
 
 export default function MarketingMobileMenu({
-  navLinks,
   menuOpen,
   closeMenu,
 }: MarketingMobileMenuProps) {

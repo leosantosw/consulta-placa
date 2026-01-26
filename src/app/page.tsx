@@ -1,6 +1,10 @@
 import MarketingHeader from "@/components/sections/home/MarketingHeader";
 import HeroSection from "@/components/sections/home/HeroSection";
 import PlansSection from "@/components/sections/home/PlansSection";
+import HowItWorksSection from "@/components/sections/home/HowItWorksSection";
+import FaqSection from "@/components/sections/home/FaqSection";
+import FooterSection from "@/components/sections/home/FooterSection";
+import ScrollToTopButton from "@/components/sections/home/ScrollToTopButton";
 
 export default function Home() {
   return (
@@ -8,6 +12,10 @@ export default function Home() {
       <MarketingHeader />
       <HeroSection />
       <PlansSection />
+      <HowItWorksSection />
+      <FaqSection />
+      <FooterSection />
+      <ScrollToTopButton />
     </main>
   );
 }

@@ -5,7 +5,7 @@ import RegisterForm from "@/components/sections/auth/RegisterForm";
 export default function RegisterSection() {
   return (
     <div className="min-h-screen bg-background text-text">
-      <main className="mx-auto flex w-full max-w-6xl flex-1 items-center justify-center px-6 py-16">
+      <main className="mx-auto flex w-full max-w-6xl flex-1 items-center justify-center px-6 py-8">
         <section className="relative w-full max-w-md overflow-hidden rounded-[32px] border border-border bg-card/70 p-8 shadow-sm">
           <div className="absolute -right-24 -top-24 h-48 w-48 rounded-full bg-primary/10 blur-2xl" />
           <div className="absolute -bottom-24 -left-24 h-48 w-48 rounded-full bg-secondary/10 blur-2xl" />
@@ -31,7 +31,6 @@ export default function RegisterSection() {
           </div>
         </section>
       </main>
-      <DashboardFooter className="mt-8" />
     </div>
   );
 }

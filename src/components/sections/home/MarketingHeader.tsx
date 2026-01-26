@@ -3,24 +3,11 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  BookOpen,
-  CreditCard,
-  HelpCircle,
-  Menu,
-  Sparkles,
-  User,
-  X,
-} from "lucide-react";
+import { Menu, User, X } from "lucide-react";
 import MarketingMobileMenu from "@/components/sections/home/MarketingMobileMenu";
+import { navLinks } from "@/components/sections/home/navLinks";
 
 export default function MarketingHeader() {
-  const navLinks = [
-    { label: "Planos", href: "#planos", Icon: CreditCard },
-    { label: "Como funciona", href: "#como-funciona", Icon: Sparkles },
-    { label: "FAQ", href: "#faq", Icon: HelpCircle },
-    { label: "Blog", href: "/blog", Icon: BookOpen },
-  ];
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -119,11 +106,7 @@ export default function MarketingHeader() {
         </div>
       </div>
 
-      <MarketingMobileMenu
-        navLinks={navLinks}
-        menuOpen={menuOpen}
-        closeMenu={closeMenu}
-      />
+      <MarketingMobileMenu menuOpen={menuOpen} closeMenu={closeMenu} />
     </header>
   );
 }
