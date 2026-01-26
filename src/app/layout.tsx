@@ -14,8 +14,42 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Consultar",
-  description: "App Next.js",
+  metadataBase: new URL("https://olhaessecarro.com.br"),
+  title: {
+    default: "Olha Esse Carro",
+    template: "%s | Olha Esse Carro",
+  },
+  description:
+    "Consulte placa e histórico veicular com informações de restrições, sinistros, leilão, débitos e multas.",
+  alternates: {
+    canonical: "https://olhaessecarro.com.br",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://olhaessecarro.com.br",
+    siteName: "Olha Esse Carro",
+    title: "Olha Esse Carro",
+    description:
+      "Consulte placa e histórico veicular com informações de restrições, sinistros, leilão, débitos e multas.",
+    locale: "pt_BR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Olha Esse Carro",
+    description:
+      "Consulte placa e histórico veicular com informações de restrições, sinistros, leilão, débitos e multas.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({
