@@ -3,7 +3,8 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Mail } from "lucide-react";
 import { toast } from "sonner";
-import { recoveryFormSchema } from "@/lib/auth/validation";
+import { recoveryFormSchema } from "@/lib/auth/validations/recovery";
+import { Turnstile } from "next-turnstile";
 
 type FormState = {
   email: string;
@@ -15,6 +16,7 @@ const initialState: FormState = {
 
 export default function PasswordRecoveryForm() {
   const [formState, setFormState] = useState<FormState>(initialState);
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [errors, setErrors] = useState<
     Partial<Record<keyof FormState, string>>
   >({});
@@ -31,6 +33,12 @@ export default function PasswordRecoveryForm() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!turnstileToken) {
+      toast.error("Confirme que você não é um robô.");
+      setStatus("idle");
+      return;
+    }
 
     const parsed = recoveryFormSchema.safeParse(formState);
     if (!parsed.success) {
@@ -49,7 +57,10 @@ export default function PasswordRecoveryForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "same-origin",
-        body: JSON.stringify(parsed.data)
+        body: JSON.stringify({
+          ...parsed.data,
+          turnstile_token: turnstileToken
+        })
       });
 
       const payload = await response.json().catch(() => null);
@@ -92,9 +103,16 @@ export default function PasswordRecoveryForm() {
           <p className="text-xs text-rose-500">{errors.email}</p>
         ) : null}
       </div>
+      <Turnstile
+        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+        onVerify={setTurnstileToken}
+        onError={() => setTurnstileToken("")}
+        onExpire={() => setTurnstileToken("")}
+        theme="auto"
+      />
       <button
         type="submit"
-        disabled={status === "submitting"}
+        disabled={status === "submitting" || !turnstileToken}
         className="w-full cursor-pointer rounded-2xl bg-primary px-4 py-3 text-sm font-semibold text-white transition hover:bg-primary/90"
       >
         {status === "submitting" ? "Enviando..." : "Enviar link"}

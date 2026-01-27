@@ -1,5 +1,4 @@
 import { LockKeyhole, ShieldCheck, UserPlus } from "lucide-react";
-import DashboardFooter from "@/components/dashboard/footer/DashboardFooter";
 import RegisterForm from "@/components/sections/auth/RegisterForm";
 
 export default function RegisterSection() {

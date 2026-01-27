@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { LockKeyhole, ShieldCheck } from "lucide-react";
-import DashboardFooter from "@/components/dashboard/footer/DashboardFooter";
 import LoginForm from "@/components/sections/auth/LoginForm";
 
 export default function LoginSection() {

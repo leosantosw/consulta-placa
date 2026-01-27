@@ -4,7 +4,7 @@ import { useState, type ChangeEvent, type FormEvent } from "react";
 import { LockKeyhole, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { loginFormSchema } from "@/lib/auth/validation";
+import { loginFormSchema } from "@/lib/auth/validations/login";
 import { useAuth } from "@/hooks/useAuth";
 
 type FormState = {

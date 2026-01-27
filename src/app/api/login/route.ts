@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
-import { parseLoginInput } from "@/lib/auth/validation";
+import { parseLoginInput } from "@/lib/auth/validations/login";
 import { createJwt } from "@/lib/auth/jwt";
 
 export async function POST(request: Request) {

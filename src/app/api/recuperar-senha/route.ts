@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { parseRecoveryInput } from "@/lib/auth/validation";
+import { parseRecoveryInput } from "@/lib/auth/validations/recovery";
+import { validateTurnstileToken } from "next-turnstile";
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -16,6 +17,22 @@ export async function POST(request: Request) {
   }
 
   try {
+    const result = await validateTurnstileToken({
+      token: input.turnstile_token,
+      secretKey: process.env.TURNSTILE_SECRET_KEY!
+    });
+
+    if (!result.success) {
+      return NextResponse.json({ error: "Captcha inválido." }, { status: 403 });
+    }
+  } catch {
+    return NextResponse.json(
+      { error: "Não foi possível validar o captcha." },
+      { status: 502 }
+    );
+  }
+
+  try {
     const user = await prisma.users.findUnique({
       where: { email: input.email },
       select: { id: true }
@@ -23,8 +40,8 @@ export async function POST(request: Request) {
 
     if (!user) {
       return NextResponse.json(
-        { error: "Email não encontrado." },
-        { status: 404 }
+        { message: "Enviamos o link de recuperação." },
+        { status: 200 }
       );
     }
 

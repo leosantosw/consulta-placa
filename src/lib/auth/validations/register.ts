@@ -5,7 +5,8 @@ export const registerInputSchema = z.object({
   email: z.string().trim().email({ message: "Informe um e-mail válido." }),
   password: z
     .string()
-    .min(8, { message: "A senha deve ter no mínimo 8 caracteres." })
+    .min(8, { message: "A senha deve ter no mínimo 8 caracteres." }),
+  turnstile_token: z.string().min(1, { message: "Captcha ausente." })
 });
 
 export type RegisterInput = z.infer<typeof registerInputSchema>;
@@ -23,31 +24,6 @@ export const registerFormSchema = registerInputSchema
   });
 
 export type RegisterFormInput = z.infer<typeof registerFormSchema>;
-
-export const loginFormSchema = z.object({
-  email: z.string().trim().email({ message: "Informe um e-mail válido." }),
-  password: z
-    .string()
-    .min(8, { message: "A senha deve ter no mínimo 8 caracteres." })
-});
-
-export type LoginFormInput = z.infer<typeof loginFormSchema>;
-
-export const recoveryFormSchema = z.object({
-  email: z.string().trim().email({ message: "Informe um e-mail válido." })
-});
-
-export type RecoveryFormInput = z.infer<typeof recoveryFormSchema>;
-
-export const parseLoginInput = (value: unknown): LoginFormInput | null => {
-  const result = loginFormSchema.safeParse(value);
-  return result.success ? result.data : null;
-};
-
-export const parseRecoveryInput = (value: unknown): RecoveryFormInput | null => {
-  const result = recoveryFormSchema.safeParse(value);
-  return result.success ? result.data : null;
-};
 
 export const parseRegisterInput = (value: unknown): RegisterInput | null => {
   const result = registerInputSchema.safeParse(value);

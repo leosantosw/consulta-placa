@@ -2,12 +2,14 @@
 
 import { useReducedMotion } from "motion/react";
 import { motion } from "motion/react";
+import { useRouter } from "next/navigation";
 import { Sparkles } from "lucide-react";
 import PlanCard from "@/components/ui/PlanCard";
 import { creditPlans } from "@/lib/wallets/creditPlans";
 
 export default function PlansSection() {
   const prefersReducedMotion = useReducedMotion();
+  const router = useRouter();
 
   return (
     <section
@@ -81,6 +83,7 @@ export default function PlansSection() {
                   pricePerCredit={pricePerCredit}
                   isFeatured={plan.recommended}
                   badgeText={plan.badge}
+                  onBuy={() => router.push("/cadastro")}
                 />
               </motion.div>
             );

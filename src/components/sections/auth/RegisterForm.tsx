@@ -6,7 +6,8 @@ import Link from "next/link";
 import { LockKeyhole, Mail, User } from "lucide-react";
 import { toast } from "sonner";
 import Button from "@/components/ui/Button";
-import { registerFormSchema } from "@/lib/auth/validation";
+import { registerFormSchema } from "@/lib/auth/validations/register";
+import { Turnstile } from "next-turnstile";
 
 type FormState = {
   name: string;
@@ -25,6 +26,7 @@ const initialState: FormState = {
 };
 
 export default function RegisterForm() {
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [formState, setFormState] = useState<FormState>(initialState);
   const router = useRouter();
   const [status, setStatus] = useState<
@@ -46,7 +48,16 @@ export default function RegisterForm() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const parsed = registerFormSchema.safeParse(formState);
+    if (!turnstileToken) {
+      toast.error("Confirme que você não é um robô.");
+      setStatus("error");
+      return;
+    }
+
+    const parsed = registerFormSchema.safeParse({
+      ...formState,
+      turnstile_token: turnstileToken
+    });
     if (!parsed.success) {
       const fieldErrors = parsed.error.flatten().fieldErrors;
       setErrors({
@@ -71,7 +82,8 @@ export default function RegisterForm() {
         body: JSON.stringify({
           name: parsed.data.name,
           email: parsed.data.email,
-          password: parsed.data.password
+          password: parsed.data.password,
+          turnstile_token: parsed.data.turnstile_token
         })
       });
 
@@ -201,10 +213,17 @@ export default function RegisterForm() {
             </p>
           ) : null}
         </div>
+        <Turnstile
+          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+          onVerify={setTurnstileToken}
+          onError={() => setTurnstileToken("")}
+          onExpire={() => setTurnstileToken("")}
+          theme="auto"
+        />
         <Button
           type="submit"
           className="w-full rounded-2xl"
-          disabled={status === "submitting"}
+          disabled={status === "submitting" || !turnstileToken}
         >
           {status === "submitting" ? "Criando..." : "Criar conta"}
         </Button>

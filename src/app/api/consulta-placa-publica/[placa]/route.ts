@@ -12,7 +12,9 @@ const mockedBasicData = {
   tipo: "Motocicleta",
   fabricante: "HONDA",
   imagem: "https://apiplacas.com.br/logos/logosMarcas/vw.png",
-  placaFormatada: "OTM 2202"
+  placaFormatada: "OTM 2202",
+  marca: "VW",
+  chassi: "*****10137",
 };
 
 export async function GET(

@@ -1,39 +1,48 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
-import { parseRegisterInput } from "@/lib/auth/validation";
+import { parseRegisterInput } from "@/lib/auth/validations/register";
 import { createJwt } from "@/lib/auth/jwt";
+import { validateTurnstileToken } from "next-turnstile";
 
 export async function POST(request: Request) {
   let body: unknown;
+
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json(
-      { error: "Dados inválidos." },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Dados inválidos." }, { status: 400 });
   }
 
   const input = parseRegisterInput(body);
   if (!input) {
+    return NextResponse.json({ error: "Dados inválidos." }, { status: 400 });
+  }
+
+  try {
+    const result = await validateTurnstileToken({
+      token: input.turnstile_token,
+      secretKey: process.env.TURNSTILE_SECRET_KEY!
+    });
+
+    if (!result.success) {
+      return NextResponse.json({ error: "Captcha inválido." }, { status: 403 });
+    }
+  } catch {
     return NextResponse.json(
-      { error: "Dados inválidos." },
-      { status: 400 }
+      { error: "Não foi possível validar o captcha." },
+      { status: 502 }
     );
   }
 
   try {
     const existingUser = await prisma.users.findUnique({
       where: { email: input.email },
-      select: { id: true }
+      select: { id: true },
     });
 
     if (existingUser) {
-      return NextResponse.json(
-        { error: "Email já cadastrado." },
-        { status: 409 }
-      );
+      return NextResponse.json({ error: "Email já cadastrado." }, { status: 409 });
     }
 
     const user = await prisma.users.create({
@@ -42,17 +51,15 @@ export async function POST(request: Request) {
         email: input.email,
         password_hash: input.password,
         wallets: {
-          create: {
-            balance: 0
-          }
-        }
+          create: { balance: 0 },
+        },
       },
       select: {
         id: true,
         name: true,
         email: true,
-        created_at: true
-      }
+        created_at: true,
+      },
     });
 
     const token = await createJwt(
@@ -67,7 +74,7 @@ export async function POST(request: Request) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7
+      maxAge: 60 * 60 * 24 * 7,
     });
 
     return NextResponse.json(user, { status: 201 });
