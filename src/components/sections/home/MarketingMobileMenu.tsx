@@ -54,7 +54,7 @@ export default function MarketingMobileMenu({
               Área do Cliente
             </Link>
             <Link
-              href="/register"
+              href="/cadastro"
               onClick={closeMenu}
               className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--featured)] bg-[var(--featured)] px-4 py-2.5 text-base font-semibold text-white shadow-[0_16px_36px_rgba(17,24,39,0.3)] transition-all hover:-translate-y-0.5 hover:shadow-[0_20px_44px_rgba(17,24,39,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--featured)] focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-[var(--primary)] dark:bg-[var(--primary)] dark:hover:bg-[var(--primary)]/90 dark:focus-visible:ring-[var(--primary)]"
             >

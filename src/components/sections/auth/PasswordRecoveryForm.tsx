@@ -40,7 +40,10 @@ export default function PasswordRecoveryForm() {
       return;
     }
 
-    const parsed = recoveryFormSchema.safeParse(formState);
+    const parsed = recoveryFormSchema.safeParse({
+      ...formState,
+      turnstile_token: turnstileToken
+    });
     if (!parsed.success) {
       const fieldErrors = parsed.error.flatten().fieldErrors;
       setErrors({
@@ -57,10 +60,7 @@ export default function PasswordRecoveryForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "same-origin",
-        body: JSON.stringify({
-          ...parsed.data,
-          turnstile_token: turnstileToken
-        })
+        body: JSON.stringify(parsed.data)
       });
 
       const payload = await response.json().catch(() => null);
