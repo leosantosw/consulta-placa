@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type MouseEvent, type FormEvent } from "react";
 import {
   useMotionValue,
   useReducedMotion,
@@ -8,14 +8,17 @@ import {
   useTransform,
 } from "motion/react";
 import { ArrowDown } from "lucide-react";
+import { useRouter } from "next/navigation";
 import CarImagePreview from "@/components/sections/home/CarImagePreview";
 import FloatingReportCards from "@/components/sections/home/FloatingReportCards";
 import MobileReportList from "@/components/sections/home/MobileReportList";
 
 export default function HeroSection() {
   const heroRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
   const prefersReducedMotion = useReducedMotion();
   const [isPointerFine, setIsPointerFine] = useState(false);
+  const [plate, setPlate] = useState("");
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
   const smoothX = useSpring(rawX, { stiffness: 120, damping: 18, mass: 0.2 });
@@ -56,6 +59,15 @@ export default function HeroSection() {
     rawY.set(0);
   };
 
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const normalizedPlate = plate.trim().replace(/\s+/g, "").toUpperCase();
+    if (!normalizedPlate) {
+      return;
+    }
+    router.push(`/consulta/${encodeURIComponent(normalizedPlate)}`);
+  };
+
   return (
     <section
       ref={heroRef}
@@ -80,22 +92,27 @@ export default function HeroSection() {
               </p>
             </div>
 
-            <div className="flex w-full flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+            <form
+              className="flex w-full flex-col items-stretch gap-3 sm:flex-row sm:items-center"
+              onSubmit={handleSubmit}
+            >
               <div className="flex w-full flex-1 items-center rounded-xl border border-border/70 bg-card/80 px-5 py-3.5 shadow-[0_6px_24px_rgba(15,23,42,0.08)] focus-within:border-primary/60 focus-within:ring-2 focus-within:ring-primary/20">
                 <input
                   type="text"
                   placeholder="Digite a placa (ex: ABC1D23)"
                   className="w-full bg-transparent text-[15px] text-text outline-none placeholder:text-text-secondary sm:text-base"
                   aria-label="Digite a placa"
+                  value={plate}
+                  onChange={(event) => setPlate(event.target.value)}
                 />
               </div>
               <button
-                type="button"
+                type="submit"
                 className="inline-flex w-full cursor-pointer items-center justify-center rounded-xl border border-[var(--featured)] bg-[var(--featured)] px-7 py-3.5 text-base font-semibold text-white shadow-[0_14px_34px_rgba(15,23,42,0.18)] transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_44px_rgba(15,23,42,0.24)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--featured)] focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-[var(--primary)] dark:bg-[var(--primary)] dark:hover:bg-[var(--primary)]/90 dark:focus-visible:ring-[var(--primary)] sm:w-auto"
               >
                 Consultar agora
               </button>
-            </div>
+            </form>
 
             <p className="text-sm text-text-secondary">
               Sem cadastro inicial • resultado em segundos

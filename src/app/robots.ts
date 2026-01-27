@@ -6,7 +6,18 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: [],
+        disallow: [
+          "/dashboard",
+          "/recuperar-senha",
+        ],
+      },
+      {
+        userAgent: "Googlebot",
+        allow: ["/blog", "/blog/"],
+        disallow: [
+          "/dashboard",
+          "/recuperar-senha",
+        ],
       },
     ],
     sitemap: "https://olhaessecarro.com.br/sitemap.xml",
