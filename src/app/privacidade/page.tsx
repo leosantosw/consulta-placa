@@ -16,52 +16,109 @@ export default function PrivacidadePage() {
             <div>
               <PageHeader title="Política de Privacidade" />
               <p className="max-w-xl text-sm text-text-secondary">
-                Esta política explica como tratamos dados e protegemos suas
-                informações ao usar a plataforma OlhaEsseCarro.
+                Esta política explica como tratamos as informações ao usar a
+                plataforma OlhaEsseCarro para consultas veiculares.
               </p>
             </div>
             <div className="rounded-2xl border border-border bg-background/70 px-4 py-3 text-xs text-text-secondary">
               Última atualização: janeiro de 2026
             </div>
           </div>
+
           <div className="grid gap-6 md:grid-cols-2">
             <article className="rounded-2xl border border-border bg-background/70 p-6">
-              <h3 className="text-base font-semibold text-text">
-                Dados coletados
-              </h3>
+              <h3 className="text-base font-semibold text-text">Dados coletados</h3>
               <p className="mt-3 text-sm text-text-secondary">
-                Coletamos informações necessárias para criar sua conta,
-                processar pagamentos e entregar resultados das consultas.
+                Coletamos apenas os dados necessários para criar e manter sua conta:
+                <strong className="text-text"> nome</strong>,{" "}
+                <strong className="text-text">e-mail</strong> e{" "}
+                <strong className="text-text">senha</strong>.
+                <br />
+                <br />
+                Para realizar uma consulta, o usuário informa a placa do veículo e
+                nós enviamos essa informação apenas no momento da consulta para
+                processamento do resultado.
+                <br />
+                <br />
+                <strong className="text-text">
+                  Não coletamos nem exibimos dados pessoais de proprietários de veículos
+                </strong>{" "}
+                (como nome, CPF ou endereço).
               </p>
             </article>
+
             <article className="rounded-2xl border border-border bg-background/70 p-6">
-              <h3 className="text-base font-semibold text-text">
-                Uso das informações
-              </h3>
+              <h3 className="text-base font-semibold text-text">Uso das informações</h3>
               <p className="mt-3 text-sm text-text-secondary">
-                Utilizamos os dados para operar o serviço, melhorar a
-                experiência e cumprir obrigações legais.
+                Usamos os dados de cadastro para autenticação, segurança e
+                disponibilização do acesso à plataforma (ex.: login, recuperação de conta,
+                controle de créditos e suporte).
+                <br />
+                <br />
+                As informações veiculares retornadas na consulta são exibidas apenas
+                para a finalidade solicitada pelo usuário.
               </p>
             </article>
+
             <article className="rounded-2xl border border-border bg-background/70 p-6">
-              <h3 className="text-base font-semibold text-text">
-                Compartilhamento
-              </h3>
+              <h3 className="text-base font-semibold text-text">Compartilhamento</h3>
               <p className="mt-3 text-sm text-text-secondary">
-                Não vendemos seus dados. Compartilhamentos ocorrem apenas com
-                provedores essenciais para processamento e segurança.
+                Utilizamos fornecedor terceirizado para processar consultas veiculares.
+                Nessa etapa, a placa informada pode ser compartilhada{" "}
+                <strong className="text-text">somente</strong> para retornar o resultado.
+                <br />
+                <br />
+                Não vendemos dados pessoais e não compartilhamos seus dados de cadastro
+                com terceiros para fins de publicidade.
               </p>
             </article>
+
             <article className="rounded-2xl border border-border bg-background/70 p-6">
-              <h3 className="text-base font-semibold text-text">
-                Segurança e retenção
-              </h3>
+              <h3 className="text-base font-semibold text-text">Segurança e retenção</h3>
               <p className="mt-3 text-sm text-text-secondary">
-                Mantemos medidas de segurança e retemos informações pelo tempo
-                necessário para cumprir contratos e requisitos legais.
+                Adotamos medidas técnicas e organizacionais de segurança para proteger
+                as informações.
+                <br />
+                <br />
+                <strong className="text-text">
+                  Senhas são armazenadas de forma criptografada (hash)
+                </strong>{" "}
+                e não são acessíveis em formato original.
+                <br />
+                <br />
+                Mantemos dados de cadastro enquanto sua conta estiver ativa ou conforme
+                necessário para cumprir obrigações legais. Sempre que possível, evitamos
+                reter dados de consultas além do necessário para operação e prevenção a abuso.
+              </p>
+            </article>
+
+            {/* Extras essenciais (LGPD) */}
+            <article className="rounded-2xl border border-border bg-background/70 p-6 md:col-span-2">
+              <h3 className="text-base font-semibold text-text">Base legal (LGPD)</h3>
+              <p className="mt-3 text-sm text-text-secondary">
+                Tratamos os dados de cadastro principalmente para{" "}
+                <strong className="text-text">execução do contrato</strong> (fornecer acesso
+                ao serviço),{" "}
+                <strong className="text-text">cumprimento de obrigação legal</strong> quando aplicável
+                e{" "}
+                <strong className="text-text">legítimo interesse</strong> para fins de segurança,
+                prevenção a fraudes e melhoria do serviço, sempre respeitando seus direitos.
+              </p>
+            </article>
+
+            <article className="rounded-2xl border border-border bg-background/70 p-6 md:col-span-2">
+              <h3 className="text-base font-semibold text-text">Seus direitos</h3>
+              <p className="mt-3 text-sm text-text-secondary">
+                Você pode solicitar confirmação de tratamento, acesso, correção,
+                atualização, portabilidade (quando aplicável) e exclusão de dados, além
+                de informações sobre compartilhamento.
+                <br />
+                <br />
+                Para solicitações, entre em contato pelo e-mail abaixo.
               </p>
             </article>
           </div>
+
           <div className="mt-8 flex flex-col gap-4 rounded-2xl border border-border bg-background/70 p-6 text-sm text-text-secondary md:flex-row md:items-center md:justify-between">
             <p className="max-w-2xl">
               Precisa de mais detalhes sobre privacidade? Fale com nosso time e
